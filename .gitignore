@@ -22,6 +22,7 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+/local.properties
 *.iml
 .gradle
 **/build/
@@ -42,3 +43,5 @@ captures
 /.fleet/
 /.gradle/
 /.idea/
+/kotlin-js-store/yarn.lock
+/kotlin-js-store/
