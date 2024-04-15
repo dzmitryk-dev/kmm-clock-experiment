@@ -1,2 +1,1 @@
-
 expect fun getFormatedDate(): String

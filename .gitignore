@@ -43,5 +43,3 @@ captures
 /.fleet/
 /.gradle/
 /.idea/
-/kotlin-js-store/yarn.lock
-/kotlin-js-store/

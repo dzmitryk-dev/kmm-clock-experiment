@@ -1,4 +1,1 @@
-
-actual fun getFormatedDate(): String {
-    TODO()
-}
+actual fun getFormatedDate(): String = getKotlinxDatetimeFormatedDate()

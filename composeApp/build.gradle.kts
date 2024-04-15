@@ -69,9 +69,7 @@ kotlin {
             }
         }
 
-        jsMain.dependencies {
-            implementation(npm("@js-joda/timezone", "2.3.0"))
-        }
+        val wasmJsMain by getting
     }
 }
 
