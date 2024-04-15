@@ -33,7 +33,7 @@ kotlin {
             }
         }
     }
-    
+
     jvm("desktop")
     
     sourceSets {
@@ -50,6 +50,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation(libs.kotlinx.datetime)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

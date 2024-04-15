@@ -1,6 +1,6 @@
 package com.github.dzmitrykdev.clock
 
-import App
+import Clock
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,7 +12,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            App()
+            Clock()
         }
     }
 }
@@ -20,5 +20,5 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun AppAndroidPreview() {
-    App()
+    Clock()
 }
