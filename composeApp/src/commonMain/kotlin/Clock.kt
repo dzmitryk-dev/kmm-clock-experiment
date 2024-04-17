@@ -8,9 +8,26 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.center
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.TextMeasurer
+import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.Typeface
 import kotlinx.coroutines.delay
-import kotlinx.datetime.*
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.skia.TextLine
 import kotlin.time.Duration.Companion.seconds
 
 @Preview
@@ -21,6 +38,64 @@ fun Clock() {
 
     Box(modifier = Modifier.fillMaxSize()) {
         Canvas(modifier = Modifier.fillMaxSize()) {
+            drawCircle(color = Color.Black, center = size.center, radius = (size.minDimension / 2.0f - 8))
+            drawCircle(color = Color.White, center = size.center, radius = (size.minDimension / 2.0f - 10))
+            drawCircle(color = Color.DarkGray, center = size.center, radius = 20f)
+            repeat(60) { second ->
+                rotate(degrees = second * 6f) {
+                    drawLine(
+                        color = Color.Black,
+                        start = Offset(size.width / 2, size.height - size.minDimension + 30),
+                        end = Offset(
+                            size.width / 2, size.height - size.minDimension + when {
+                                second % 15 == 0 -> 60
+                                second % 5 == 0 -> 45
+                                else -> 40
+                            }
+                        ),
+                        strokeWidth = when {
+                            second % 15 == 0 -> 4f
+                            second % 5 == 0 -> 2f
+                            else -> 1f
+                        }
+                    )
+                }
+            }
+
+//            repeat(12) { i ->
+//                val n = i + 1
+//                rotate(degrees = n * 30f) {
+//                    drawIntoCanvas { canvas ->
+//                        canvas.nativeCanvas.drawString("$n", )
+//                    }
+//                }
+//            }
+            val hour = time.value.hour % 12
+            val hourAngle = (hour * 60 + time.value.minute) / 2f
+            rotate(hourAngle) {
+                drawLine(
+                    color = Color.DarkGray,
+                    start = size.center,
+                    end = size.center + Offset(0f, -size.minDimension / 4.0f),
+                    strokeWidth = 20f
+                )
+            }
+            rotate(time.value.minute * 6f) {
+                drawLine(
+                    color = Color.DarkGray,
+                    start = size.center,
+                    end = size.center + Offset(0f, -size.minDimension / 3.0f),
+                    strokeWidth = 10f
+                )
+            }
+            rotate(time.value.second * 6f) {
+                drawLine(
+                    color = Color.DarkGray,
+                    start = size.center,
+                    end = size.center + Offset(0f, -size.minDimension / 2.5f),
+                    strokeWidth = 5f
+                )
+            }
         }
         Column {
             Text(date)
