@@ -15,19 +15,19 @@ import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.text.TextLayoutResult
-import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.Typeface
+import androidx.compose.ui.text.rememberTextMeasurer
 import kotlinx.coroutines.delay
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.jetbrains.skia.TextLine
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 import kotlin.time.Duration.Companion.seconds
 
 @Preview
@@ -35,6 +35,7 @@ import kotlin.time.Duration.Companion.seconds
 fun Clock() {
     val date = remember { getFormatedDate() }
     val time = remember { mutableStateOf(getTime()) }
+    val textMeasurer = rememberTextMeasurer()
 
     Box(modifier = Modifier.fillMaxSize()) {
         Canvas(modifier = Modifier.fillMaxSize()) {
@@ -62,13 +63,14 @@ fun Clock() {
                 }
             }
 
+//            val angleStep = 2 * PI / 12
+//            val radius = size.minDimension / 2.0f - 70
 //            repeat(12) { i ->
 //                val n = i + 1
-//                rotate(degrees = n * 30f) {
-//                    drawIntoCanvas { canvas ->
-//                        canvas.nativeCanvas.drawString("$n", )
-//                    }
-//                }
+//                val angle = angleStep * n
+//                val x = center.x + radius * cos(angle - PI / 2)  // Subtract PI/2 to align number 12 to the top
+//                val y = center.y + radius * sin(angle - PI / 2)
+//                drawText(textMeasurer, "$n", topLeft = Offset(x.toFloat(), y.toFloat()))
 //            }
             val hour = time.value.hour % 12
             val hourAngle = (hour * 60 + time.value.minute) / 2f
